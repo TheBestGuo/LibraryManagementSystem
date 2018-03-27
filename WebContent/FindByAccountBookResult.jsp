@@ -14,8 +14,7 @@
   request.setCharacterEncoding("utf-8");
   List<BookBean> list =(List<BookBean>)request.getAttribute("result");
 	%>
-<h4>
-<table border="1" width="750px" height="100px">
+<table border="1">
 <tr>
 <td>书号</td> <td>书名</td><td>出版社</td><td>分类</td><td>总量</td><td>余量</td>
  </tr>
@@ -31,8 +30,8 @@
   </tr>
   <%} %>
 </table>
-</h4>
 
+</br></br></br></br>
 
 <form action="" method="post">
 	请输入您要借阅的书本信息：
@@ -40,17 +39,6 @@
 	书名：<input type="text" name="book_name">
 	<input type="submit" value="借阅">&nbsp;<input type="reset" value="重置">
 </form>
-
-
-
-
-
-
-
-
-
-
-
-
+${error}
 </body>
 </html>
