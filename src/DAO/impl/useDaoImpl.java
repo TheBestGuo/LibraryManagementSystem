@@ -5,16 +5,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
+import java.util.*;
+import vo.JavaBean.*;
+import java.text.SimpleDateFormat;
 import DAO.Util.*;
 import DAO.useDao;
-import vo.JavaBean.*;
 
 public class useDaoImpl implements useDao{
 	private Connection conn = null;//数据库连接
 	private PreparedStatement pstmt = null;//数据库操作
 	private ResultSet rs = null;//数据库操作结果
 	private Statement stmt = null;//数据库操作
+	
+	/*查找*/
 	public ArrayList<BookBean>  findByAccurateBook(String Book_id,String Book_name,String Book_from,String Book_class)
 	{
 		ArrayList<BookBean> al = new ArrayList<BookBean>();
@@ -45,10 +48,10 @@ public class useDaoImpl implements useDao{
 		} finally {
 			ConnDB.free(rs, pstmt,stmt, conn);
 		}
-
 		return al;
 	}
 	
+	/*返回书本分类*/
 	public ArrayList<String>  findBookClass()
 	{
 		ArrayList<String> al = new ArrayList<String>();
@@ -67,4 +70,83 @@ public class useDaoImpl implements useDao{
 		return al;
 	}
 	
+	/*判断是否超过每个用户最多借5本，超过返回true 未超过返回false*/
+	public boolean judgeUserLendBookCount(String account)	
+	{
+		int maxBookCount=5;
+		String flag=null;
+		try {
+		conn=ConnDB.getConnection();
+		String sql="select count(book_id) from lend where L_account=? and Is_return='否'";
+		pstmt=conn.prepareStatement(sql);
+		pstmt.setString(1, account);
+		rs=pstmt.executeQuery();	
+		while(rs.next()) {
+			flag=rs.getString(1);
+		}}catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnDB.free(rs, pstmt,stmt, conn);
+		}
+		if(Integer.parseInt(flag)>5)
+		{return true;}
+		else
+		{return false;}
+	}
+	
+	
+	/*判断是否超时  超时返回true  没超时返回false*/
+	public boolean judgeUserLendBookTimeOut(String account)
+	{
+		String flag=null;
+		try {
+		conn=ConnDB.getConnection();
+		String sql="select max(DATEDIFF(CURDATE(),L_time)) from lend where L_account='?' and Is_return='否'";
+		pstmt=conn.prepareStatement(sql);
+		pstmt.setString(1, account);
+		rs=pstmt.executeQuery();	
+		while(rs.next()) {
+			flag=rs.getString(1);
+		}}catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnDB.free(rs, pstmt,stmt, conn);
+		}
+		if(Integer.parseInt(flag)>61)
+		{
+			return true;
+		}
+		else
+			return false;
+	}
+	
+	/*判断相同图书是否借阅过 借过未还返回true 借过已还或未结果返回false*/
+	public boolean judgeUserDistinctBook(String account,String book_id)
+	{
+		String flag=null;
+		try {
+			conn=ConnDB.getConnection();
+			String sql="select 1 from lend where L_account='?' and book_id=? and Is_return='否'";
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, account);
+			pstmt.setString(2, book_id);
+			rs=pstmt.executeQuery();	
+			while(rs.next()) {
+				flag=rs.getString(1);
+			}}catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				ConnDB.free(rs, pstmt,stmt, conn);
+			}
+		if(Integer.parseInt(flag)==1)
+		{
+			return true;
+		}
+		else
+			return false;
+		
+	}
+	
+	/*获取相差天数*/
+	//public void CountLendTime(){}
 }
