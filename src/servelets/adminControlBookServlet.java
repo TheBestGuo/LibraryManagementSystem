@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import DAO.impl.*;
 import vo.JavaBean.*;
-
+import DAO.factory.*;
 /**
  * Servlet implementation class adminControlBookServlet
  */
@@ -35,15 +35,14 @@ public class adminControlBookServlet extends HttpServlet {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		String flag = request.getParameter("flag");
 		if("allbook".equals(flag)) {
-			adminDaoImpl ubc=new adminDaoImpl();
-			ArrayList<BookBean> al=ubc.showAllBook();
+
+			ArrayList<BookBean> al=bookFactory.getInterfaceAdminDao().showAllBook();
 			request.setAttribute("book", al);
 			request.getRequestDispatcher("ShowAllBook.jsp").forward(request,response);
 		}	
 		else if("delbook".equals(flag)) {
 			String id = request.getParameter("id");
-			adminDaoImpl ubc=new adminDaoImpl();
-			if (ubc.delbook(id)) {
+			if (bookFactory.getInterfaceAdminDao().delbook(id)) {
 				request.setAttribute("res", "操作成功！");
 			} else {
 				request.setAttribute("res", "操作失败！");
@@ -55,8 +54,7 @@ public class adminControlBookServlet extends HttpServlet {
 		
 		else if("finbook".equals(flag)) {
 			String id = request.getParameter("id");
-			adminDaoImpl ubc = new adminDaoImpl();
-			ArrayList<BookBean> al=ubc.findBook(id,"","","");
+			ArrayList<BookBean> al=bookFactory.getInterfaceAdminDao().findBook(id,"","","");
 			request.setAttribute("book", al);
 			request.getRequestDispatcher("altbook.jsp").forward(request,response);
 		}
@@ -88,8 +86,7 @@ String flag = request.getParameter("flag");
 			ub.setBook_from(book_from);
 			ub.setBook_all(book_all);
 			ub.setBook_last(book_last);
-			adminDaoImpl ubc = new adminDaoImpl();
-			if (ubc.addBook(ub)) {
+			if (bookFactory.getInterfaceAdminDao().addBook(ub)) {
 				request.setAttribute("res", "操作成功！");
 			} else {
 				request.setAttribute("res", "操作失败！");
@@ -105,8 +102,7 @@ String flag = request.getParameter("flag");
 			String book_name = request.getParameter("book_name");
 			String book_class = request.getParameter("book_class");
 			String book_from = request.getParameter("book_from");
-			adminDaoImpl ubc=new adminDaoImpl();
-			ArrayList<BookBean> al=ubc.findBook(book_id, book_name, book_from, book_class);
+			ArrayList<BookBean> al=bookFactory.getInterfaceAdminDao().findBook(book_id, book_name, book_from, book_class);
 			request.setAttribute("book", al);
 				
 		
@@ -129,8 +125,7 @@ String flag = request.getParameter("flag");
 			ub.setBook_from(book_from);
 			ub.setBook_all(book_all);
 			ub.setBook_last(book_last);
-			adminDaoImpl ubc = new adminDaoImpl();
-			if (ubc.altBook(ub, id)) {
+			if (bookFactory.getInterfaceAdminDao().altBook(ub, id)) {
 				request.setAttribute("res", "操作成功！");
 			} else {
 				request.setAttribute("res", "操作失败！");

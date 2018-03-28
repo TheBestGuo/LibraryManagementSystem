@@ -7,14 +7,17 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="adminControlBookServlet?flag=addbook" method="post">
-书号：<input type="text" name="book_id"><br>
-书名：<input type="text" name="book_name"><br>
-出版社：<input type="text" name="book_from"><br>
-类型：<input type="text" name="book_class"><br>
-总量：<input type="text" name="book_all"><br>
+<form action="adminControlAccountServlet?flag=adduser" method="post">
+账号：<input type="text" name="user_account"><br>
+密码：<input type="text" name="user_password"><br>
+电话：<input type="text" name="user_phone"><br>
+类型：<select name="user_job">
+	<option balue="管理员">管理员</option>
+	<option balue="普通用户">普通用户</option>
+	</select><br>
 <input type="submit" value="确定">&nbsp;<input type="reset" value="重置">
 <br>
+
 
 </form>
 

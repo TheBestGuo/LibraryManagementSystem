@@ -25,11 +25,7 @@
 
 </form>
 
- 
- 
 
- 
- 
  <div id="one">
    			<%List<BookBean> ls = (List<BookBean>)request.getAttribute("book"); %>   			   			
    			 <table border="2" width="700">
