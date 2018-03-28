@@ -261,8 +261,31 @@ public class useDaoImpl implements useDao{
 		else
 			return false;
 	}
-	
-	/*还书操作，返回还书结果*/
+	/*还书操作书本表,返回操作结果*/
+	public boolean returnBookTable(String book_id)
+	{
+		int flag=0;
+		try {
+			conn=ConnDB.getConnection();
+			String sql="update book set Book_last=Book_last+1 where Book_id=?";
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, book_id);
+			flag=pstmt.executeUpdate();	
+			}catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				ConnDB.free(rs, pstmt,stmt, conn);
+			}
+		if(flag>0)
+		{
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+	}
+	/*还书操作借书记录，返回还书结果*/
 	public int returnBook(String account,String book_id)
 	{
 		int flag=0;
@@ -305,7 +328,10 @@ public class useDaoImpl implements useDao{
 		}
 		if(flag>0)
 		{
-			return 1;
+			if(returnBookTable(book_id))
+			{return 1;}
+			else
+			 return 0;
 		}
 		else
 		{

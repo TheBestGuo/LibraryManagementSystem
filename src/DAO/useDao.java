@@ -17,4 +17,5 @@ public interface useDao {
 	public ArrayList<LendBean> findUserLend(String account);
 	public int returnBook(String account,String book_id);
 	public float findByBookToll(String account,String book_id);
+	public boolean returnBookTable(String book_id);
 }
