@@ -8,8 +8,7 @@
 </head>
 <body>
 <%
-session.setAttribute("account", "10001");
-List<LendBean> list =bookFactory.getInterfaceUseDao().findUserLend("10001");
+List<LendBean> list = (List<LendBean>)request.getAttribute("returnList");
  %>
 
  <table border="1">

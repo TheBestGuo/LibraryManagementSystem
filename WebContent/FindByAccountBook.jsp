@@ -7,7 +7,6 @@
 <title>精确查询</title>
 </head>
 <body>
-<%session.setAttribute("account", "10004"); %>
   <form action="userControlServlet?flag=find" method="post">
 	  书号：<input type="text" name="book_id"></br>
 	  书名：<input type="text" name="book_name"></br>

@@ -64,13 +64,23 @@ public class userControlServlet extends HttpServlet {
 				toll=bookFactory.getInterfaceUseDao().findByBookToll(account, book_id);
 				String resultToll="您应缴费 "+toll+" 元！";
 				request.setAttribute("returnToll", resultToll);
+				List<LendBean> list =bookFactory.getInterfaceUseDao().findUserLend(account);
+				request.setAttribute("returnList", list);
 				request.getRequestDispatcher("ReturnBook.jsp").forward(request,response);
 			}
 			else
 			{
 				request.setAttribute("returnResult", "归还失败");
+				List<LendBean> list =bookFactory.getInterfaceUseDao().findUserLend(account);
+				request.setAttribute("returnList", list);
 				request.getRequestDispatcher("ReturnBook.jsp").forward(request,response);
 			}
+		}
+		else if(flag.equals("ReturnJsp"))
+		{
+			List<LendBean> list =bookFactory.getInterfaceUseDao().findUserLend(account);
+			request.setAttribute("returnList", list);
+			request.getRequestDispatcher("ReturnBook.jsp").forward(request,response);
 		}
 		
 
