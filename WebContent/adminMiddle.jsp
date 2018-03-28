@@ -7,6 +7,20 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+<%if(request.getAttribute("res")==null) {%>
+
 欢迎使用图书管理系统，请在左侧选择功能！
+
+<%} else%>
+
+<% if(request.getAttribute("res")!=null) {%>
+
+<%=request.getAttribute("res")%>
+
+<%} %>
+
+
+
 </body>
 </html>

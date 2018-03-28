@@ -10,8 +10,6 @@
 图书操作：<br>
 <p><a href="adminControlBookServlet?flag=allbook" target="middle">查找书籍</a></p>
 <p><a href="addbook.jsp" target="middle">增加书籍</a></p>
-<p><a href="" target="middle">删除书籍</a></p>
-<p><a href="" target="middle">修改书籍</a></p>
 用户操作：<br>
 <p><a href="" target="middle">查找用户</a></p>
 <p><a href="" target="middle">增加用户</a></p>
