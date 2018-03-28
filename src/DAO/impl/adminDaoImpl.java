@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import DAO.adminDao;
 import DAO.Util.ConnDB;
-import vo.JavaBean.BookBean;
+import vo.JavaBean.*;
 
 public class adminDaoImpl implements adminDao {
 	private Connection conn = null;//数据库连接
@@ -164,4 +164,131 @@ public class adminDaoImpl implements adminDao {
 		}
 		return b;
 }
+	
+	
+	
+	
+	
+	
+	/**对用户操作**/
+	public ArrayList<UserBean>  showAllUser()
+	{
+		/**显示所有书籍**/
+		ArrayList<UserBean> al = new ArrayList<UserBean>(); 
+		try {
+		conn=ConnDB.getConnection();
+		pstmt=conn.prepareStatement("select * from users");
+		rs=pstmt.executeQuery();
+		while(rs.next()){
+			UserBean ub=new UserBean();
+			ub.setAccount(rs.getString(1));
+			ub.setJob(rs.getString(3));
+			ub.setPhone(rs.getString(4));
+			al.add(ub);
+		}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			ConnDB.free(rs, pstmt,stmt, conn);
+		}
+
+
+		return al;
+}
+		
+	
+	
+	public boolean  addUser(UserBean ub)
+	{
+		/**添加书籍**/
+		boolean b = false;
+		ArrayList<UserBean> al = new ArrayList<UserBean>(); 
+		try {
+		conn=ConnDB.getConnection();
+		pstmt=conn.prepareStatement("insert into users(account,password,job,phone)values(?,?,?,?)");
+		pstmt.setString(1,ub.getAccount());
+		pstmt.setString(2,ub.getPassword());
+		pstmt.setString(3,ub.getJob());
+		pstmt.setString(4,ub.getPhone());
+		int num=pstmt.executeUpdate();
+		if(num==1) {b = true;}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			ConnDB.free(rs, pstmt,stmt, conn);
+		}
+		return b;
+}
+	
+	public boolean deluser(String id)
+	{
+		boolean b = false;
+		try {
+			conn=ConnDB.getConnection();
+			pstmt=conn.prepareStatement("delete from users where account = ?");
+			pstmt.setString(1,id);
+			int num=pstmt.executeUpdate();
+			if(num==1) {b = true;}
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally {
+				ConnDB.free(rs, pstmt,stmt, conn);
+			}
+		return b;
+	}
+	
+	
+	public ArrayList<UserBean>  finduser(String account,String job,String phone)
+	{
+		ArrayList<UserBean> al = new ArrayList<UserBean>();
+		try {
+		conn=ConnDB.getConnection();
+		String sql="select * from users where 1=1";
+		if(!account.equals(""))
+			sql=sql+" and account="+account;
+		if(!job.equals(""))
+			sql=sql+" and job like '%"+job+"%'";
+		if(!phone.equals(""))
+			sql=sql+" and phone like '%"+phone+"%';";
+		pstmt=conn.prepareStatement(sql);
+		rs=pstmt.executeQuery();				
+		while(rs.next()) {
+			UserBean ub= new UserBean();
+			ub.setAccount(rs.getString(1));
+			ub.setPassword(rs.getString(2));
+			ub.setJob(rs.getString(3));
+			ub.setPhone(rs.getString(4));
+			al.add(ub);
+		}}catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnDB.free(rs, pstmt,stmt, conn);
+		}
+		return al;
+	}
+	
+	
+	public boolean  altUser(UserBean ub,String id)
+	{
+		/**添加书籍**/
+		boolean b = false;
+		ArrayList<UserBean> al = new ArrayList<UserBean>(); 
+		try {
+		conn=ConnDB.getConnection();
+		pstmt=conn.prepareStatement("update users set account=?,password=?,job=?,phone=? where account=?");
+		pstmt.setString(1,ub.getAccount());
+		pstmt.setString(2,ub.getPassword());
+		pstmt.setString(3,ub.getJob());
+		pstmt.setString(4,ub.getPhone());
+		pstmt.setString(5,id);
+		int num=pstmt.executeUpdate();
+		if(num==1) {b = true;}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			ConnDB.free(rs, pstmt,stmt, conn);
+		}
+		return b;
+}
+	
 	}
