@@ -7,11 +7,13 @@
 <title>精确查询</title>
 </head>
 <body>
+<%session.setAttribute("account", "10004"); %>
   <form action="userControlServlet?flag=find" method="post">
 	  书号：<input type="text" name="book_id"></br>
 	  书名：<input type="text" name="book_name"></br>
 	  出版社：<input type="text" name="book_from"></br>
 	  分类：<select name="book_class">
+	  <option value="">全部</option>
 	 <%
 	  List<String> list =bookFactory.getInterfaceUseDao().findBookClass();
 	 for(int i=0;i<list.size();i++)
@@ -23,14 +25,7 @@
   	<input type="submit" value="查询">
   </form>
   
-  </br>
-   </br> </br>
-   <%Date dt=new Date(); 
-   SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-   String a=sdf.format(dt);
-   %>
-   <%=a %>
   
-  
+  <font size="30px" color="red">${lendResult}</font>
 </body>
 </html>

@@ -6,7 +6,7 @@ private String L_id;
 private String L_time;
 private String R_time;
 private String Is_retrun;
-private String Toll;
+private float Toll;
 public String getL_account() {
 	return L_account;
 }
@@ -37,10 +37,10 @@ public String getIs_retrun() {
 public void setIs_retrun(String is_retrun) {
 	Is_retrun = is_retrun;
 }
-public String getToll() {
+public float getToll() {
 	return Toll;
 }
-public void setToll(String toll) {
+public void setToll(float toll) {
 	Toll = toll;
 }
 
