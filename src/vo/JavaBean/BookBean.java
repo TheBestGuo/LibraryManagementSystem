@@ -7,7 +7,6 @@ private String Book_from;
 private String Book_class;
 private int Book_all;
 private int Book_last;
-
 public String getBook_class() {
 	return Book_class;
 }

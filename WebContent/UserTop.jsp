@@ -8,6 +8,6 @@
 </head>
 <body>
 <h3 align="center">图书馆管理系统</h3>
-<a href="#" target=_top>退出</a>
+<a href="outLogin" target=_top>退出</a>
 </body>
 </html>

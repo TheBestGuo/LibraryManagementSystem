@@ -6,18 +6,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class test
+ * Servlet implementation class outLogin
  */
-@WebServlet("/test")
-public class test extends HttpServlet {
+@WebServlet("/outLogin")
+public class outLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public test() {
+    public outLogin() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,7 +29,8 @@ public class test extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		request.setAttribute("res", 1);
+		HttpSession session= request.getSession();
+		session.removeAttribute("account");
 		request.getRequestDispatcher("/Login.jsp").forward(request,response);
 	}
 
@@ -37,8 +39,7 @@ public class test extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//doGet(request, response);
-		
+		doGet(request, response);
 	}
 
 }

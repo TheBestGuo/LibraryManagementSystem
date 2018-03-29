@@ -28,4 +28,8 @@ public interface adminDao {
 	public ArrayList<UserBean>  finduser(String account,String job,String phone);
 	
 	public boolean  altUser(UserBean ub,String id);
+	
+	public int checkUserJob(String account,String password);
+	
+	public boolean check(String userid,String userpwd,String userjob);
 }

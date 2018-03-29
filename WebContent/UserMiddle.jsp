@@ -8,7 +8,6 @@
 </head>
 <body>
 
-<%session.setAttribute("account", "10004"); %>
 欢迎使用图书管理系统，请在左侧选择功能！
 
 

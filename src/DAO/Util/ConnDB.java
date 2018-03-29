@@ -33,7 +33,7 @@ public class ConnDB{
 		}catch(SQLException e){
 			e.printStackTrace();
 		}finally{
-			try{
+				try{
 				if(st!=null)st.close();
 				}catch(SQLException e){e.printStackTrace();}
 				finally{

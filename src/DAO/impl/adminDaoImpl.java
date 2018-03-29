@@ -40,8 +40,6 @@ public class adminDaoImpl implements adminDao {
 		}finally {
 			ConnDB.free(rs, pstmt,stmt, conn);
 		}
-
-
 		return al;
 }
 		
@@ -164,12 +162,7 @@ public class adminDaoImpl implements adminDao {
 		}
 		return b;
 }
-	
-	
-	
-	
-	
-	
+
 	/**对用户操作**/
 	public ArrayList<UserBean>  showAllUser()
 	{
@@ -291,4 +284,62 @@ public class adminDaoImpl implements adminDao {
 		return b;
 }
 	
+	
+	/*判断身份 管理员返回1 普通用户返回0*/
+	public int checkUserJob(String account,String password)
+	{
+		String flag="";
+		try {
+			conn=ConnDB.getConnection();
+			pstmt=conn.prepareStatement("select job from users where account=? and password=?");
+			pstmt.setString(1,account);
+			pstmt.setString(2,password);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				flag = rs.getString(1);
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally {
+				ConnDB.free(rs, pstmt,stmt, conn);
+			}
+		if(flag.equals("管理员"))
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
 	}
+	
+	
+	
+	/*判断登录 登陆成功返回true 登录失败返回false*/
+	public boolean check(String userid,String userpwd,String userjob) {
+		int flag=0;
+		try {
+				String info ="";
+				conn=ConnDB.getConnection();
+				String sql="select 1 from users where account=? and password=? and job=?";
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setString(1, userid);
+				pstmt.setString(2, userpwd);
+				pstmt.setString(3, userjob);
+				rs=pstmt.executeQuery();
+				if(rs.next())
+				{   
+					flag=1;
+				}
+				else
+				{ 
+					flag=0;
+				}
+		}catch(Exception e){e.printStackTrace();}
+		if(flag==1)
+		return true;
+		else
+		return false;
+	}
+
+}
